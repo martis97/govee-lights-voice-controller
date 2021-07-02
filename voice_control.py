@@ -158,5 +158,4 @@ if __name__ == "__main__":
     voice_controller = GoveeVoiceControl()
 
     # just playing around with dunder/magic methods
-    # i know this isn't necessary
     voice_controller()
