@@ -64,6 +64,7 @@ class GoveeVoiceControl:
 
     def recognise_audio(self, audio):
         print("Recognising..", end="")
+        text = None
         try:
             # Setting a time limit since this can carry on for ages
             # and it does not seem to provide a request timeout parameter
@@ -74,22 +75,20 @@ class GoveeVoiceControl:
                 ).lower()
         except sr.UnknownValueError:
             print("Unknown value")
-            text = None
         except TimeoutError:
             print("Request timed out")
-            text = None
         finally:
             if text:
                 print(f"Recognised: {text}")
             return text
 
     def action(self, text):
+        words_list = text.split()
         if "lights on" in text:
             self.turn_lights("on")
         elif "lights off" in text:
             self.turn_lights("off")
-        elif "colour" in text:
-            words_list = text.split()
+        elif "colour" in words_list:
             try:
                 # Get the next word after "colour".
                 # This also may fail in the rare case of Google API returning
